@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 #process different variables from gldas datasets
 if [ -z "$GISBASE" ] ; then
     echo "You must be in GRASS GIS to run this program." >&2
