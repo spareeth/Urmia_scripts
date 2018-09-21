@@ -13,7 +13,7 @@ export LC_NUMERIC
 
 INDAT="/mnt/rawdata/mashhad_phase2/GLDAS/input"
 OUTDAT="/mnt/rawdata/urmia/scripts"
-g.region vect=egypt_bound res=0.25 -a
+g.region vect=urmia_bound res=0.25 -a
 #g.region n=37.219 s=35.394 w=58.166 e=61.494 res=0.25 -a
 cd ${INDAT}
 for yy in `seq 2013 2014`; do
