@@ -1,4 +1,5 @@
 #!/bin/sh
+## Author: Sajid Pareeth, 2018
 ## patch scenesin the ame path for the urmia and prepare for SEBAL input
 ## paths are 167,168,169
 ## tiles are 167 - 34,35; 168 - 33,34,35; 169 - 33,34
@@ -47,50 +48,4 @@ for t in `cat lc8_p168.csv`; do
 	r.mask -r
 	DIR="${SEN}_L1TP_p${PTH}_patch_${t}_T1"
 	mkdir -p ${OUTDIR}/${DIR}
-	## Now patching to path bbox
-	g.region vect=path${PTH}_bnd res=30 -a
-	MAPS1=`g.list rast pattern=*${t}*BQA|tr '\n' ','  | sed 's+,$+\n+g'`
-	MAPS1CNT=`g.list rast pattern=*${t}*BQA|wc -l`
-	OUT1="${SEN}_L1TP_p${PTH}_patch_${t}_T1_BQA"
-	if [ ${MAPS1CNT} -eq 1 ]; then
-		r.mapcalc "${OUT1} = ${MAPS1}"
-	else
-		r.patch input=${MAPS1} output=${OUT1}
-	fi
-	r.out.gdal in=${OUT1} out=${OUTDIR}/${DIR}/${OUT1}.TIF nodata=0 --o -f
-	MAPS2=`g.list rast pattern=*${t}*cloud_Mask|tr '\n' ','  | sed 's+,$+\n+g'`
-	MAPS2CNT=`g.list rast pattern=*${t}*cloud_Mask|wc -l`
-	OUT2="${SEN}_L1TP_p${PTH}_patch_${t}_T1_cloud_Mask"
-        if [ ${MAPS2CNT} -eq 1 ]; then
-                r.mapcalc "${OUT2} = ${MAPS2}"
-        else
-                r.patch input=${MAPS2} output=${OUT2}
-        fi
-	r.out.gdal in=${OUT2} out=${OUTDIR}/${DIR}/${OUT2}.TIF nodata=0 --o -f
-	MAPS3=`g.list rast pattern=*${t}*snow_Mask|tr '\n' ','  | sed 's+,$+\n+g'`
-	MAPS3CNT=`g.list rast pattern=*${t}*snow_Mask|wc -l`
-	OUT3="${SEN}_L1TP_p${PTH}_patch_${t}_T1_snow_Mask"
-        if [ ${MAPS3CNT} -eq 1 ]; then
-                r.mapcalc "${OUT3} = ${MAPS3}"
-        else
-                r.patch input=${MAPS3} output=${OUT3}
-        fi
-	r.out.gdal in=${OUT3} out=${OUTDIR}/${DIR}/${OUT3}.TIF nodata=0 --o -f
-	for i in 1 2 3 4 5 6 7 9 10 11; do
-		MAPS=`g.list rast pattern=*${t}*B${i}|tr '\n' ','  | sed 's+,$+\n+g'`
-		MAPSCNT=`g.list rast pattern=*${t}*B${i}|wc -l`
-		OUT="${SEN}_L1TP_p${PTH}_patch_${t}_T1_B${i}"
-	        if [ ${MAPSCNT} -eq 1 ]; then
-         	       r.mapcalc "${OUT} = ${MAPS}"
-	        else
-        	       r.patch input=${MAPS} output=${OUT}
-	        fi
-		r.out.gdal in=${OUT} out=${OUTDIR}/${DIR}/${OUT}.TIF nodata=0 --o -f
-	done
-	r.composite red=${SEN}_L1TP_p${PTH}_patch_${t}_T1_B5 green=${SEN}_L1TP_p${PTH}_patch_${t}_T1_B4 blue=${SEN}_L1TP_p${PTH}_patch_${t}_T1_B3 output=${SEN}_L1TP_p${PTH}_patch_${t}_T1_comp
-	g.remove type=rast pattern=LC08* exclude="*patch*" -f
-	g.remove type=rast pattern=LC08* exclude="*patch*" -f
-	g.remove type=rast pattern=LE07* exclude="*patch*" -f
-	g.remove type=rast pattern=LE07* exclude="*patch*" -f
-	cd ${INDIR}
-done
+	## Now patching to path bbo
